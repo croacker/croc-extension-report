@@ -8,7 +8,7 @@
 	<description>Chrome Native Messaging demo application</description>
 
     <properties>
-        <starter.jar.name>demo-host-app</starter.jar.name>
+        <starter.jar.name>croc-demo-host-app</starter.jar.name>
         <main.class.name>ru.croc.chromenative.starter.Bootstrap</main.class.name>
         <jackson.version>2.7.3</jackson.version>
         <rxjava.version>1.3.2</rxjava.version>

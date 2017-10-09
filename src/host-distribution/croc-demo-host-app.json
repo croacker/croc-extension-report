@@ -1,0 +1,9 @@
+{
+    "name": "croc.demo.host.app",
+    "description": "Demo Native Messaging Host Application",
+    "path": "run.bat",
+    "type": "stdio",
+    "allowed_origins": [
+      "chrome-extension://*/"
+    ]
+  }
