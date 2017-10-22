@@ -3,7 +3,7 @@
 ## I. Что такое расширения.
 1. Для чего выпускают ПО, и не только ПО, с урезанной функциональностью.
 2. Точки интеграции для сторонних разработчиков.
-3. Стандартизация расширений для браузеров Browser extension community group(https://www.w3.org/community/browserext/).
+3. Стандартизация расширений для браузеров Browser extension community group(https://www.w3.org/community/browserext/). Страница на github - https://browserext.github.io/
 
 ## II. Что из себя представляет расширение.
 1. Расширение - небольшая программа написанная с использованием web-технологий html, JavaScript и CSS.
