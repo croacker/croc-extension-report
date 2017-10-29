@@ -1,14 +1,10 @@
 /**
- * Идентификатор приложения хоста.
- */
-var nativeApplicationName = 'com.croc.native_demo_app';
-
-/**
  * Клик на иконке extension, просто сообщаем что клик был.
  */
 chrome.browserAction.onClicked.addListener(function (tab) {
     console.log('Click Demo Browser Extension');
     console.log(extensionInstance.booksInfo);
+    nativeApplication.postMessage({type:'msg', booksInfo:extensionInstance.booksInfo});
 });
 
 /**
@@ -90,6 +86,7 @@ var ExtensionInstance = function (extensionId) {
     this.addBookInfo = function(bookInfo){
         var idx = bookInfo.author + '_' + bookInfo.title;
         me.booksInfo[idx] = bookInfo;
+        nativeApplication.postMessage({type:'addBook', bookInfo: bookInfo});
     }
 
     /**
@@ -134,7 +131,7 @@ var BrowserTab = function (tabId) {
 /**
  * Приложение хоста.
  */
-var NativApplication = function(){
+var NativeApplication = function(nativeApplicationName){
     var me = this;
 
     /**
@@ -145,10 +142,10 @@ var NativApplication = function(){
     /**
      * Отправить сообщение приложению хоста.
      */
-    this.postMessage = function(){
+    this.postMessage = function(message){
         var port = me.getPort();
         if(port){
-            port.postMessage(json);
+            port.postMessage(message);
         }
     }
 
@@ -157,7 +154,7 @@ var NativApplication = function(){
      */
     this.getPort = function(){
         if (!me.port) {
-            me.port = connectToPort();
+            me.port = me.connectToPort();
         }
         return me.port;
     };
@@ -165,13 +162,14 @@ var NativApplication = function(){
     /**
      * Подключиться к приложению хоста.
      */
-    this.connectToPort = function(listener) {
-        me.port = chrome.runtime.connectNative(nativeApplicationName);
-        me.port.onDisconnect.addListener(function (e) {
+    this.connectToPort = function() {
+        var port = chrome.runtime.connectNative(nativeApplicationName);
+        port.onDisconnect.addListener(function (e) {
+            console.log("Native app disconnect.");
             console.log(e);
             me.port = null;
         });
-        me.port.onMessage.addListener(function portOnMessageListener(message) {
+        port.onMessage.addListener(function portOnMessageListener(message) {
             console.log(message);
         });
         return port;
@@ -190,3 +188,8 @@ const MessageType = {
  * Экземпляр контроллера расширения.
  */
 const extensionInstance = new ExtensionInstance(chrome.runtime.id);
+
+/**
+ * Приложение хоста. В конструктор передается идентификатор.
+ */
+var nativeApplication = new NativeApplication('com.croc.demo_native_app');

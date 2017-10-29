@@ -1,44 +1,87 @@
 package ru.croc.demo.service;
 
-import ru.croc.demo.data.PersistEntity;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 /**
- *
  * @author AGumenyuk
  * @since 25.10.2017 18:59
  */
 public class DatasourceService {
 
+    public static final String CR_LF = "\r\n";
+
     private static DatasourceService instance;
 
-    public DatasourceService getInstance(){
-        if(instance == null){
+    private Writer writer;
+
+    public static DatasourceService getInstance() {
+        if (instance == null) {
             instance = new DatasourceService();
         }
         return instance;
     }
 
-    private Map<String, PersistEntity> data = new LinkedHashMap<>();
-
-    public void add(PersistEntity entity){
-        data.put(entity.getId(), entity);
+    public void store(String json) {
+        Writer writer = getWriter();
+        try {
+            writer.append(json);
+            writer.append(CR_LF);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        flush();
     }
 
-    public PersistEntity get(String id){
-        return data.get(id);
+    public void close() {
+        if(writer != null){
+            try {
+                writer.close();
+            } catch (IOException e) {
+            }
+        }
     }
 
-    public List<PersistEntity> all(PersistEntity entity){
-        return data.values().stream().collect(Collectors.toList());
+    private Writer getWriter() {
+        if(writer == null) {
+            try {
+                writer = new BufferedWriter(new FileWriter(getStoreFile(), true));
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        }
+        return writer;
     }
 
-    public void delete(PersistEntity entity){
-        data.remove(entity.getId());
+    private void flush(){
+        try {
+            getWriter().flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    private String getStoreFile(){
+        String storeFolder = getStoreFolder();
+        return storeFolder + "/books.txt";
+    }
+
+    /**
+     * Каталог в который будем сохранять результаты.
+     *
+     * @return
+     */
+    private String getStoreFolder() {
+        String userProfile = System.getProperty("user.home");
+        String storeFolder = userProfile + "/AppData/Local/Croc/DemoNativeApp/store";
+        File folder = new File(storeFolder);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return storeFolder;
     }
 
 }

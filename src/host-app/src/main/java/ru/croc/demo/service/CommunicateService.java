@@ -57,7 +57,8 @@ public class CommunicateService {
                 throw new InterruptedIOException("Size incoming buffer is 0. Blocked communication");
             } else if (size > MAX_MESSAGE_BYTES_COUNT) {
                 b = new byte[0];
-                throw new InterruptedIOException("Size incoming buffer is very big. Blocked communication");
+                throw new InterruptedIOException("Size incoming buffer is very big: " +
+                        size + ". Blocked communication");
             }
 
             b = new byte[size];

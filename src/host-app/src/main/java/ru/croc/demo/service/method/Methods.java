@@ -21,6 +21,7 @@ public enum Methods {
     DELETE("delete", DeleteEntityMethod.class);
 
     private final String name;
+    private final Class methodClass;
 
     Methods(String name, Class methodClass) {
         this.name = name;
