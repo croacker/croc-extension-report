@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Simple extension",
+    "version": "0.0.1",
+    
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+
+    "browser_action": {
+        "default_title": "Simple extension",
+        "default_icon": "icons/icon48.png"
+    },
+
+    "background": {
+        "scripts": [
+          "background.js"
+        ],
+        "persistent": true
+      },
+
+    "permissions": [
+        "http://127.0.0.1:8082/*",
+        "tabs",
+        "nativeMessaging"
+    ]
+}
