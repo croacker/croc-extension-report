@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Информация о сотруднике</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<script src="index.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -11,31 +12,30 @@
     <div class="content">
       <ul>
         <li>
-          <input id="mail" class="wicon"  type="text" placeholder="Фамилия"/>
+          <input id="surnameName" class="wicon"  type="text" placeholder="Фамилия"/>
         </li>
         <li>
-          <input id="address" class="wicon" type="text" placeholder="Имя"/>
+          <input id="firstName" class="wicon" type="text" placeholder="Имя"/>
         </li>
         <li>
-          <input id="address" class="wicon" type="text" placeholder="Отчество"/>
+          <input id="middleName" class="wicon" type="text" placeholder="Отчество"/>
         </li>
         <li>
-          <input id="address" type="text" placeholder="Должность"/>
-          <select id="address" class="wicon" type="text" placeholder="Отдел">
+          <input id="post" type="text" placeholder="Должность"/>
+          <select id="place" class="wicon" type="text" placeholder="Отдел">
             <option value="EMPTY"></option>
-            <option value="A">Руководство</option>
-            <option value="B">Управление</option>
-            <option value="C">Производство</option>
+            <option value="hq">Руководство</option>
+            <option value="management">Управление</option>
+            <option value="production">Производство</option>
           </select>
         </li>
-        <li>
-          <input class="block" id="more" type="text" placeholder="Дополнительно"/>
-        </li>
+        <!-- <li>
+          <input class="block" id="description" type="text" placeholder="Дополнительно"/>
+        </li> -->
       </ul>
     </div>
     <div class="actions">
-      <button id="clear-button" class="button blue">ОК</button>
-      <button id="ok-button" class="button">Отмена</button>
+      <button id="ok-button" class="button blue">ОК</button>
     </div>
   </div>
 </body>
